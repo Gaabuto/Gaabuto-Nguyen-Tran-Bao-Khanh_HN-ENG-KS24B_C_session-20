@@ -13,7 +13,10 @@ typedef struct {
 void setBook( mangSach sach[], int *n);
 void printBook(mangSach sach[], int *n);
 void addBook(mangSach sach[], int *n);
-void deleteBook(mangSach sach[], int *m)
+void deleteBook(mangSach sach[], int *m);
+void updateBook(mangSach sach[], int *m);
+void sortBook(mangSach sach[], int *m);
+void findBook(mangSach sach[], int *m);
 
 int main(){
 	mangSach sach[100];
@@ -44,15 +47,17 @@ int main(){
 				break;
 			}
 			case 5:{
+				updateBook(sach,&size);
 				break;
 			}
 			case 6:{
+				sortBook(sach,&size);
 				break;
 			}
-			case 7:{
-
+			/*case 7:{
+				findBook(sach,&size);
 				break;
-			}
+			}*/
 			default:{
 				printf("Sai dinh dang, moi ban nhap lai!\n");
 				break;
@@ -91,7 +96,7 @@ void printBook(mangSach sach[], int *n)	{
 
 void addBook(mangSach sach[], int *n){
 	int position, flag = 1;
-	printf("moi nhap vi tri them sach:");
+	printf("moi nhap vi tri them sach: ");
 	scanf("%d",&position);
 	getchar();
 	position = position - 1;
@@ -121,12 +126,54 @@ void addBook(mangSach sach[], int *n){
 	
 	void deleteBook(mangSach sach[], int *n){
 		int position;
-		printf("moi ban nhap vi tri can xoa");
+		printf("moi ban nhap vi tri can xoa: ");
 		scanf("%d",&position);
 	getchar();
 	position = position - 1;
 	if( position < 0 || position > *n + 1){
 		printf("vi tri k hop le");}
 		
-		for ( int i = )
+		for ( int i = position; i < *n; i ++){
+			sach[i] = sach[i + 1];
+		}
+		(*n)--;
 	}
+	
+	void updateBook(mangSach sach[], int *m){
+		int position;
+		printf("moi ban nhap vi tri can chinh sua: ");
+		scanf("%d",&position);
+	getchar();
+	position = position - 1;
+	printf("Nhap thong tin sach:\n");
+		printf("Ma sach: ");
+		fgets(sach[position].maSach,20,stdin);
+		sach[position].maSach[strcspn(sach[position].maSach, "\n")] = '\0';
+		printf("Ten sach: ");
+		fgets(sach[position].tenSach,50,stdin);
+		sach[position].tenSach[strcspn(sach[position].tenSach, "\n")] = '\0';
+		printf("Tac gia: ");
+		fgets(sach[position].tacGia,50,stdin);
+		sach[position].tacGia[strcspn(sach[position].tacGia, "\n")] = '\0';
+		printf("Gia tien: ");
+		scanf("%d", &sach[position].giaTien);
+		getchar();
+	}
+	
+	void sortBook(mangSach sach[], int *n){
+		int a;
+		printf("Moi ban chon:\n1.Tang dan\n2.Giam dan\nLua chon cua ban: ");
+		scanf("%d",&a);
+		
+		for (int i = 0; i < *n - 1; i ++){
+			for ( int j = i +1; j < *n - 1; i ++){
+				if( a == 1 && sach[i].giaTien > sach[j].giaTien|| a == 2 && sach[i].giaTien < sach[j].giaTien){
+					mangSach temp = sach[i];
+					sach[i] = sach[j];
+					sach[j] = temp;
+				}
+			}
+		}
+	}
+	
+	
